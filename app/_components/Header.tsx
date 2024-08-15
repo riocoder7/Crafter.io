@@ -1,3 +1,4 @@
+import { LoginLink, RegisterLink } from '@kinde-oss/kinde-auth-nextjs'
 import Image from 'next/image'
 import React from 'react'
 
@@ -43,14 +44,15 @@ function Header() {
                 className="block rounded-md bg-amber-500 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800"
                 href="#"
               >
-                Login
+                <LoginLink >Login </LoginLink>
               </a>
 
               <a
                 className="hidden rounded-md bg-zinc-900 px-5 py-2.5 text-sm font-medium text-yellow-600/75 transition sm:block hover:bg-slate-100"
                 href="#"
               >
-               Try Crafter.io
+               <RegisterLink >Try Crafter.io</RegisterLink>
+               
               </a>
             </div>
 
