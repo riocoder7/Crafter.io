@@ -21,6 +21,7 @@ function Hero() {
             >
               Get Started
             </a>
+            
             <a
   className="relative block w-full rounded px-12 py-3 text-sm font-medium text-Black shadow 
              bg-gradient-to-r from-yellow-400 via-gray-300 to-gray-500 
