@@ -11,7 +11,7 @@ function DashBoard() {
 
   const convex=useConvex();
   const {user}:any=useKindeBrowserClient();
-  const getUser=useQuery(api.user.getUser,{email:user?.email});
+  // const getUser=useQuery(api.user.getUser,{email:user?.email});
 
   const createUser=useMutation(api.user.createUser);
   useEffect(()=>{
@@ -41,7 +41,7 @@ function DashBoard() {
   return (
     
 <LogoutLink>
-<button>Logout</button>
+<Button>Logout</Button>
 </LogoutLink>
   
   )
