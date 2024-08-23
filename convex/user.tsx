@@ -25,4 +25,3 @@ export const createUser=mutation({
        return await ctx.db.insert("user",args);
     },
 })
-})

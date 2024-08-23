@@ -111,3 +111,38 @@
   animation-delay: 1.5s;
 }
 
+.gradient-text {
+  background: linear-gradient(90deg, #ffd700, #808080); /* Golden to Grey gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.gradient-text {
+  background: linear-gradient(90deg, #fbbf24, #f97316); /* Amber to Orange gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-button {
+  background: linear-gradient(90deg, #fbbf24, #f97316); /* Amber to Orange gradient */
+  color: white; /* Ensure text is readable */
+  border: none; /* Remove border */
+  padding: 0.75rem 1.5rem; /* Adjust padding */
+  font-size: 1rem; /* Adjust font size */
+  cursor: pointer; /* Ensure cursor changes to pointer */
+  transition: background 0.3s ease; /* Smooth transition */
+}
+
+.gradient-button:hover {
+  background: linear-gradient(90deg, #f97316, #fbbf24); /* Inverted gradient on hover */
+}
+
+.gradient-button:disabled {
+  background: #d1d5db; /* Light grey for disabled state */
+  cursor: not-allowed; /* Change cursor for disabled state */
+  color: #6b7280; /* Grey text for disabled state */
+}
+.gradient-text-teams {
+  background: linear-gradient(90deg, #ffd700, #808080); /* Golden to Grey gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
