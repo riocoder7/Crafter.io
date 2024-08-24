@@ -1,14 +1,14 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
-const config = {
-  darkMode: ["class"],
+const config: Config = {
+  darkMode: ["class"], // Enable dark mode with class-based switching
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-	],
-  prefix: "",
+  ],
+  prefix: "", // Optional: add a prefix to all classes if needed
   theme: {
     container: {
       center: true,
@@ -74,7 +74,18 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config
+  plugins: [
+    require("tailwindcss-animate"), // Animation utilities
+    require("@tailwindcss/forms"), // Add form styling utilities
+    require("@tailwindcss/typography"), // Add typography utilities
+  ],
+  safelist: [
+    // Ensure specific classes are always included
+    "bg-gray-900",
+    "text-white",
+    "bg-gray-800",
+    "hover:bg-gray-700",
+  ],
+};
 
-export default config
+export default config;
