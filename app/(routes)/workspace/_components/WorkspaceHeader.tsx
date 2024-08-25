@@ -69,10 +69,10 @@ function WorkspaceHeader({ onSave, fileName, _id }: WorkspaceHeaderProps) {
         />
         {!isEditing ? (
           <h1 className="h-8 text-[18px] gap-2 bg-transparent text-white font-bold px-2 flex items-center">
-            <strong>{fileName}</strong> {/* Display the current file name */}
-            <Button className="ml-2" onClick={() => setIsEditing(true)}>
+            <strong>{fileName|| "latest"}</strong> {/* Display the current file name */}
+            {/* <Button className="ml-2" onClick={() => setIsEditing(true)}>
               <Edit3 className="h-4 w-4" /> Rename
-            </Button>
+            </Button> */}
           </h1>
         ) : (
           <input
