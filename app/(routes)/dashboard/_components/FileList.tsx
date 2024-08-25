@@ -1,15 +1,10 @@
+import React, { useContext, useEffect, useState } from 'react';
 import { FileListContext } from '@/app/_context/FilesListContext';
 import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs';
 import { Archive, MoreHorizontal } from 'lucide-react';
 import moment from 'moment';
 import Image from 'next/image';
-import React, { useContext, useEffect, useState } from 'react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useRouter } from 'next/navigation';
 
 export interface FILE {
@@ -21,7 +16,7 @@ export interface FILE {
   whiteboard: string;
   _id: string;
   _creationTime: number;
-  _lastEditedTime: number; // Add this property if not already present
+  _lastEditedTime: number;
 }
 
 function FileList() {
@@ -32,7 +27,6 @@ function FileList() {
 
   useEffect(() => {
     fileList_ && setFileList(fileList_);
-    console.log(fileList_);
   }, [fileList_]);
 
   return (
@@ -54,25 +48,21 @@ function FileList() {
                 <tr
                   key={index}
                   className="odd:bg-gray-700 cursor-pointer"
-                  onClick={() => router.push('/workspace/' + file._id)}
+                  onClick={() => router.push(`/workspace/${file._id}`)}
                 >
                   <td className="whitespace-nowrap px-4 py-2">{file.fileName}</td>
                   
-                  {/* Display creation time */}
                   <td className="whitespace-nowrap px-4 py-2">
                     {moment(file._creationTime).format('DD MMM YYYY, h:mm A')}
                   </td>
                   
-                  {/* Display last edited time */}
                   <td className="whitespace-nowrap px-4 py-2">
-                  {file._lastEditedTime ? moment(file._lastEditedTime).format('DD MMM YYYY') : 'Never Edited'}
-
+                    {file._lastEditedTime ? moment(file._lastEditedTime).format('DD MMM YYYY') : 'Never Edited'}
                   </td>
                   
                   <td className="whitespace-nowrap px-4 py-2">
                     {user && (
                       <Image
-                        // src={user?.picture}
                         src='/img.png'
                         alt='user'
                         width={30}
