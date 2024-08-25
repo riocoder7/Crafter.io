@@ -24,7 +24,7 @@ function Canvas({ onSaveTrigger, fileId, fileData }: { onSaveTrigger: any; fileI
     };
 
     return (
-        <div style={{ height: '670px' }}>
+        <div style={{ height: '620px' }}>
             {fileData && <>
                 <Excalidraw
                     theme='dark'

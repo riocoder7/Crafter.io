@@ -14,8 +14,6 @@ import Warning from '@editorjs/warning';
 // @ts-ignore
 import Quote from '@editorjs/quote';
 // @ts-ignore
-import ImageTool from '@editorjs/image';
-// @ts-ignore
 import Embed from '@editorjs/embed';
 // @ts-ignore
 import Code from '@editorjs/code';
@@ -34,14 +32,13 @@ import { api } from '@/convex/_generated/api';
 import { toast } from 'sonner';
 import { FILE } from '../../dashboard/_components/FileList';
 
-
 const rawDocument = {
   "time": 1550476186479,
   "blocks": [
     {
       data: {
-        text: 'Heading',
-        level: 4
+        text: '',
+        level: 1 // Default level for header
       },
       id: "1234",
       type: 'header'
@@ -77,9 +74,10 @@ function Editor({ onSaveTrigger, fileId, fileData }: { onSaveTrigger: any, fileI
           //@ts-ignore
           class: Header,
           shortcut: 'CMD+SHIFT+H',
-          inlineToolbar:true,
+          inlineToolbar: true,
           config: {
-            placeholder: 'Enter a Header'
+            placeholder: 'Enter a Header', // Placeholder text for headers
+            levels: [1, 2, 3, 4, 5, 6], // Available header levels
           }
         },
         list: {
@@ -103,8 +101,6 @@ function Editor({ onSaveTrigger, fileId, fileData }: { onSaveTrigger: any, fileI
         },  
         warning: Warning,
         quote: Quote,
-          //@ts-ignore
-        image: ImageTool,
         embed: Embed,
         code: Code,
         linkTool: {
