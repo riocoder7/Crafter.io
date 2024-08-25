@@ -39,7 +39,7 @@ function DashboardLayout(
           <div className='bg-gray-800 h-screen w-72 fixed'>
           <SideNav/>
           </div>
-          <div className='col-span-4 ml-72'>
+          <div className='col-span-4 ml-72 relative'>
           {children}
           </div>
       </div>

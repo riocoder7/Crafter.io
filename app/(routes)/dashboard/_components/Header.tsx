@@ -7,10 +7,10 @@ import React from 'react'
 function Header() {
     const { user }: any = useKindeBrowserClient();
     return (
-        <div className='flex justify-end w-full gap-4 items-center bg-gray-900 p-3'>
+        <div className='flex justify-end w-full gap-4 items-center bg-gray-900 p-3 '>
             {/* Search Input */}
-            <div className='flex gap-2 items-center border border-gray-600 rounded-md p-1 bg-gray-800 text-gray-300'>
-  <Search className='h-4 w-4 text-gray-400' />
+            <div className='flex gap-2 items-center border border-gray-600 rounded-md p-1 bg-gray-800 text-gray-300 '>
+  <Search className='h-4 w-4  text-gray-400' />
   <input 
     type='text' 
     placeholder='Search'

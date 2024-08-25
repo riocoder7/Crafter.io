@@ -21,6 +21,7 @@ export interface FILE {
   whiteboard: string;
   _id: string;
   _creationTime: number;
+  _lastEditedTime: number; // Add this property if not already present
 }
 
 function FileList() {
@@ -43,7 +44,7 @@ function FileList() {
               <tr>
                 <td className="whitespace-nowrap px-4 py-2 font-medium">File Name</td>
                 <td className="whitespace-nowrap px-4 py-2 font-medium">Created At</td>
-                <td className="whitespace-nowrap px-4 py-2 font-medium">Edited</td>
+                <td className="whitespace-nowrap px-4 py-2 font-medium">Last Edited</td>
                 <td className="whitespace-nowrap px-4 py-2 font-medium">Author</td>
                 <td className="whitespace-nowrap px-4 py-2 font-medium"></td>
               </tr>
@@ -56,12 +57,23 @@ function FileList() {
                   onClick={() => router.push('/workspace/' + file._id)}
                 >
                   <td className="whitespace-nowrap px-4 py-2">{file.fileName}</td>
-                  <td className="whitespace-nowrap px-4 py-2">{moment(file._creationTime).format('DD MMM YYYY')}</td>
-                  <td className="whitespace-nowrap px-4 py-2">{moment(file._creationTime).format('DD MMM YYYY')}</td>
+                  
+                  {/* Display creation time */}
+                  <td className="whitespace-nowrap px-4 py-2">
+                    {moment(file._creationTime).format('DD MMM YYYY, h:mm A')}
+                  </td>
+                  
+                  {/* Display last edited time */}
+                  <td className="whitespace-nowrap px-4 py-2">
+                  {file._lastEditedTime ? moment(file._lastEditedTime).format('DD MMM YYYY') : 'Never Edited'}
+
+                  </td>
+                  
                   <td className="whitespace-nowrap px-4 py-2">
                     {user && (
                       <Image
-                        src={user?.picture}
+                        // src={user?.picture}
+                        src='/img.png'
                         alt='user'
                         width={30}
                         height={30}
@@ -69,6 +81,7 @@ function FileList() {
                       />
                     )}
                   </td>
+                  
                   <td className="whitespace-nowrap px-4 py-2">
                     <DropdownMenu>
                       <DropdownMenuTrigger>
