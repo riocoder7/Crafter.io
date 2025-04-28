@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { Archive, Flag, Github } from 'lucide-react'
+import { Archive, Flag, Github, Linkedin } from 'lucide-react' // Import Linkedin icon
 import React, { useState } from 'react'
 import {
   Dialog,
@@ -25,22 +25,32 @@ function SideNavBottomSection({ onFileCreate, totalFiles }: any) {
       id: 2,
       name: 'Github',
       icon: Github,
-      path: ''
+      path: 'https://github.com/joyboi-ai/joyboi-ai'
     },
     {
       id: 3,
-      name: 'Archive',
-      icon: Archive,
-      path: ''
+      name: 'LinkedIn',
+      icon: Linkedin,
+      path: 'https://www.linkedin.com/in/suryaprasad-yadav-932b22304/' // Replace with your LinkedIn profile URL
     }
   ]
 
   const [fileInput, setFileInput] = useState('');
 
+  const handleMenuClick = (path: string) => {
+    if (path) {
+      window.open(path, '_blank'); // Open in a new tab
+    }
+  };
+
   return (
     <div>
       {menuList.map((menu, index) => (
-        <h2 key={index} className='flex gap-2 p-1 px-2 text-[14px] hover:bg-amber-400 rounded-md cursor-pointer'>
+        <h2
+          key={index}
+          className='flex gap-2 p-1 px-2 text-[14px] hover:bg-amber-400 rounded-md cursor-pointer'
+          onClick={() => handleMenuClick(menu.path)}
+        >
           <menu.icon className='h-5 w-5' />
           {menu.name}
         </h2>
@@ -77,19 +87,10 @@ function SideNavBottomSection({ onFileCreate, totalFiles }: any) {
         </DialogContent>
       </Dialog>
 
-      {/* Progress Bar */}
-      {/* <div className='h-4 w-full bg-gray-200 rounded-full mt-5'>
-        <div
-          className='h-4 bg-blue-600 rounded-full'
-          style={{ width: `${(totalFiles / 5) * 100}%` }}
-        >
-        </div>
-      </div> */}
-
       <h2 className='text-[12px] mt-3'>
         <strong>Stay hungry, stay foolish.</strong> 
       </h2>
-      <h2 className='text-[12px] mt-1'>Dont Forget to check my Github page.</h2>
+      <h2 className='text-[12px] mt-1'>Dont Forget to check my Github and LinkedIn pages.</h2>
     </div>
   )
 }

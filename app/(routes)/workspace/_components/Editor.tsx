@@ -1,160 +1,142 @@
 "use client";
-import React, { useEffect, useRef } from 'react';
-import EditorJS from '@editorjs/editorjs';
+
+import React, { useEffect, useRef } from "react";
+import EditorJS from "@editorjs/editorjs";
 // @ts-ignore
-import Header from '@editorjs/header';
+import Header from "@editorjs/header";
 // @ts-ignore
-import List from '@editorjs/list';
+import List from "@editorjs/list";
 // @ts-ignore
-import Checklist from '@editorjs/checklist';
+import Checklist from "@editorjs/checklist";
 // @ts-ignore
-import Paragraph from '@editorjs/paragraph';
+import Paragraph from "@editorjs/paragraph";
 // @ts-ignore
-import Warning from '@editorjs/warning';
+import Warning from "@editorjs/warning";
 // @ts-ignore
-import Quote from '@editorjs/quote';
+import Quote from "@editorjs/quote";
 // @ts-ignore
-import Embed from '@editorjs/embed';
+import Embed from "@editorjs/embed";
 // @ts-ignore
-import Code from '@editorjs/code';
+import Code from "@editorjs/code";
+// @ts-ignore 
+import LinkTool from "@editorjs/link";
 // @ts-ignore
-import LinkTool from '@editorjs/link';
+import Table from "@editorjs/table";
 // @ts-ignore
-import Table from '@editorjs/table';
+import Delimiter from "@editorjs/delimiter";
 // @ts-ignore
-import Delimiter from '@editorjs/delimiter';
+import Marker from "@editorjs/marker";
 // @ts-ignore
-import Marker from '@editorjs/marker';
-// @ts-ignore
-import InlineCode from '@editorjs/inline-code';
-import { useMutation } from 'convex/react';
-import { api } from '@/convex/_generated/api';
-import { toast } from 'sonner';
-import { FILE } from '../../dashboard/_components/FileList';
+import InlineCode from "@editorjs/inline-code";
+import { act_result } from "./Result";
 
 const rawDocument = {
-  "time": 1550476186479,
-  "blocks": [
+  time: 1550476186479,
+  blocks: [
     {
-      data: {
-        text: '',
-        level: 1 // Default level for header
-      },
-      id: "1234",
-      type: 'header'
+      type: "header",
+      data: { text: act_result, level: 2 },
+      id: "initial-header",
     },
     {
-      data: {
-        text: '',
-        level: 3
-      },
-      id: "1236",
-      type: 'paragraph'
+      type: "paragraph",
+      data: { text: act_result},
+      id: "initial-paragraph",
     },
   ],
-  "version": "2.8.1"
+  version: "2.8.1",
 };
-
-function Editor({ onSaveTrigger, fileId, fileData }: { onSaveTrigger: any, fileId: any, fileData: FILE }) {
-  const ref = useRef<EditorJS>();
-  const updateDocument = useMutation(api.files.updateDocument);
-
-  useEffect(() => {
-    fileData && initEditor();
-  }, [fileData]);
+let data=act_result;
+console.log(data)
+function Editor({ act_result }: { act_result: string }) {
+  const editorRef = useRef<EditorJS | null>(null);
 
   useEffect(() => {
-    onSaveTrigger && onSaveDocument();
-  }, [onSaveTrigger]);
-
-  const initEditor = () => {
     const editor = new EditorJS({
+      holder: "editorjs",
       tools: {
-        header: {
-          //@ts-ignore
-          class: Header,
-          shortcut: 'CMD+SHIFT+H',
-          inlineToolbar: true,
-          config: {
-            placeholder: 'Enter a Header', // Placeholder text for headers
-            levels: [1, 2, 3, 4, 5, 6], // Available header levels
-          }
-        },
-        list: {
-          //@ts-ignore
-          class: List,
-          inlineToolbar: true,
-          config: {
-            defaultStyle: 'unordered'
-          }
-        },
-        checklist: {
-          class: Checklist,
-          inlineToolbar: true,
-        },
-        paragraph: {
-          class: Paragraph,
-          inlineToolbar: true,
-          config: {
-            placeholder: 'One word leads to paragraph, paragraph leads to sentence and sentences lead to pages'
-          }
-        },  
+        header: Header,
+        list: List,
+        checklist: Checklist,
+        paragraph: Paragraph,
         warning: Warning,
         quote: Quote,
         embed: Embed,
         code: Code,
-        linkTool: {
-          class: LinkTool,
-          config: {
-            endpoint: 'http://localhost:3000', // Your backend endpoint for URL data fetching
-          }
-        },
+        linkTool: LinkTool,
         table: Table,
         delimiter: Delimiter,
         marker: Marker,
         inlineCode: InlineCode,
       },
-      holder: 'editorjs',
-      data: fileData?.document ? JSON.parse(fileData.document) : rawDocument
+      data: rawDocument,
     });
-    ref.current = editor;
-  };
 
-  const onSaveDocument = () => {
-    if (ref.current) {
-      ref.current.save().then((outputData) => {
-        updateDocument({
-          _id: fileId,
-          document: JSON.stringify(outputData)
-        }).then(() => {
-          toast('Document Updated!');
-        }, () => {
-          toast("Server Error!");
-        });
-      }).catch((error) => {
-        console.log('Saving failed: ', error);
-      });
+    editorRef.current = editor;
+
+    editor.isReady
+      .then(() => console.log("EditorJS is ready!"))
+      .catch((error) => console.error("EditorJS initialization failed:", error));
+
+    return () => {
+      editor.destroy();
+      editorRef.current = null;
+    };
+  }, []);
+
+  const addContent = () => {
+    if (editorRef.current) {
+      editorRef.current.isReady
+        .then(() => {
+          editorRef.current?.blocks.insertMany([
+            { type: "paragraph", data: { text: "Ssdsdd" } },
+            { type: "paragraph", data: { text: act_result } }, // Add another paragraph with act_result
+          ]);
+          console.log("Inserted multiple blocks.");
+        })
+        .catch((error) =>
+          console.error("Error inserting blocks into EditorJS:", error)
+        );
     }
   };
+  
 
   return (
-    <div style={{ 
-      display: 'flex', 
-      height: '100vh', 
-      padding: '20px',
-      backgroundColor: '#1a202c', /* Dark background for the container */
-    }}>
-      <div 
-        id="editorjs" 
-        style={{ 
-          flex: 1, /* Takes up remaining space */
-          padding: '20px',
-          backgroundColor: '#2d3748', /* Darker background for editor */
-          color: '#cbd5e0', /* Light text color */
-          borderRadius: '4px',
-          border: '1px solid #2d3748',
-          overflowY: 'auto',
-        }} 
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "#181818",
+        padding: "20px",
+        color: "#e2e2e2",
+      }}
+    >
+      <button
+        onClick={addContent}
+        style={{
+          padding: "10px 20px",
+          backgroundColor: "#4caf50",
+          color: "#fff",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+          marginBottom: "20px",
+        }}
+      >
+        Add Content
+      </button>
+      <div
+        id="editorjs"
+        style={{
+          flex: 1,
+          padding: "20px",
+          backgroundColor: "#2a2a2a",
+          borderRadius: "8px",
+          border: "1px solid #444",
+          overflowY: "auto",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
+        }}
       ></div>
     </div>
   );

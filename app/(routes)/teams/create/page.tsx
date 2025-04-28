@@ -52,7 +52,7 @@ function CreateTeam() {
             What should we call your team?
           </h2>
           <h2 className='text-gray-400'>
-            You can always change this later from settings.
+            Remember project name is permanent !.
           </h2>
           <div className='mt-7 w-[40%]'>
             <label className='text-gray-400'>
